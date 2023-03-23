@@ -19,6 +19,8 @@ app.get('/get',ShoppingRouter)
 app.get('/get/cat',ShoppingRouter)
 app.get('/get/sort',ShoppingRouter)
 app.delete('/buy',ShoppingRouter)
+app.get('/get/search',ShoppingRouter)
+
 
 
 app.listen(1400,async()=>{

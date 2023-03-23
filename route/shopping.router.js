@@ -37,7 +37,7 @@ ShoppingRouter.get('/get/cat', async (req, res) => {
         const cat=req.query.cat;
         if(!cat)return res.status(403).json({ 'msg': "Provide category" })
         let newdata = await ShoppingModel.find({category:cat})
-        res.status(201).json({ 'msg': newdata })
+        res.status(200).json({ 'msg': newdata })
     }
     catch (err) {
         console.error(err)
@@ -84,9 +84,9 @@ ShoppingRouter.get('/get/search', async (req, res) => {
     try {
        const name=req.query.name;
        if(!name) return res.status(403).json({ 'msg': "Provide id as name" })
-       await ShoppingModel.findByIdAndDelete(id)
-       res.status(200).json({ 'msg': "Item is deleted" })
-
+       const data=await ShoppingModel.find({ name: { $regex: new RegExp(name, "i") } })
+       res.status(200).json({ 'msg': data })
+    
     }
     catch (err) {
         console.error(err)
