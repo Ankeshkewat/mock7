@@ -19,4 +19,83 @@ ShoppingRouter.post('/post', async (req, res) => {
     }
 })
 
+
+//get
+ShoppingRouter.get('/get', async (req, res) => {
+    try {
+        let newdata = await ShoppingModel.find()
+        res.status(201).json({ 'msg': newdata })
+    }
+    catch (err) {
+        console.error(err)
+        res.status(500).json({ 'msg': "Something went wrong" })
+    }
+})
+//get by category
+ShoppingRouter.get('/get/cat', async (req, res) => {
+    try {
+        const cat=req.query.cat;
+        if(!cat)return res.status(403).json({ 'msg': "Provide category" })
+        let newdata = await ShoppingModel.find({category:cat})
+        res.status(201).json({ 'msg': newdata })
+    }
+    catch (err) {
+        console.error(err)
+        res.status(500).json({ 'msg': "Something went wrong" })
+    }
+})
+//sort by date
+ShoppingRouter.get('/get/sort', async (req, res) => {
+    try {
+        const val=req.query.sort;
+        if(!val)return res.status(403).json({ 'msg': "Provide Sorting in asc or des" })
+        let ser;
+        if(val=='asc'){
+            ser=1
+        }else{
+            ser=-1
+        }
+        console.log(ser)
+        let newdata = await ShoppingModel.find({}).sort({postedAt:ser})
+        res.status(201).json({ 'msg': newdata })
+    }
+    catch (err) {
+        console.error(err)
+        res.status(500).json({ 'msg': "Something went wrong" })
+    }
+})
+
+//Delete
+ShoppingRouter.delete('/buy', async (req, res) => {
+    try {
+       const id=req.query.id;
+       if(!id) return res.status(403).json({ 'msg': "Provide id as a params" })
+       await ShoppingModel.findByIdAndDelete(id)
+       res.status(200).json({ 'msg': "Item is deleted" })
+
+    }
+    catch (err) {
+        console.error(err)
+        res.status(500).json({ 'msg': "Something went wrong" })
+    }
+})
+//search by name
+ShoppingRouter.get('/get/search', async (req, res) => {
+    try {
+       const name=req.query.name;
+       if(!name) return res.status(403).json({ 'msg': "Provide id as name" })
+       await ShoppingModel.findByIdAndDelete(id)
+       res.status(200).json({ 'msg': "Item is deleted" })
+
+    }
+    catch (err) {
+        console.error(err)
+        res.status(500).json({ 'msg': "Something went wrong" })
+    }
+})
+
+
+
+
+
 module.exports = { ShoppingRouter }
