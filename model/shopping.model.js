@@ -6,6 +6,7 @@ const Schema = mongoose.Schema({
     category : String,
     image: String,
     postedAt:Date,
+    location:String,
     price : Number
 })
 

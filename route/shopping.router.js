@@ -48,7 +48,10 @@ ShoppingRouter.get('/get/page', async (req, res) => {
 ShoppingRouter.get('/get/cat', async (req, res) => {
     try {
         const cat=req.query.cat;
-        if(!cat)return res.status(403).json({ 'msg': "Provide category" })
+        if(!cat){
+            let newdata = await ShoppingModel.find()
+         return   res.status(201).json({ 'msg': newdata })
+        }
         let newdata = await ShoppingModel.find({category:cat})
         res.status(200).json({ 'msg': newdata })
     }
@@ -61,7 +64,10 @@ ShoppingRouter.get('/get/cat', async (req, res) => {
 ShoppingRouter.get('/get/sort', async (req, res) => {
     try {
         const val=req.query.sort;
-        if(!val)return res.status(403).json({ 'msg': "Provide Sorting in asc or des" })
+        if(!val){
+            let newdata = await ShoppingModel.find()
+            return   res.status(201).json({ 'msg': newdata })
+        }
         let ser;
         if(val=='asc'){
             ser=1
@@ -96,7 +102,10 @@ ShoppingRouter.delete('/buy', async (req, res) => {
 ShoppingRouter.get('/get/search', async (req, res) => {
     try {
        const name=req.query.name;
-       if(!name) return res.status(403).json({ 'msg': "Provide id as name" })
+       if(!name){
+        let newdata = await ShoppingModel.find()
+        return   res.status(201).json({ 'msg': newdata })
+       }
        const data=await ShoppingModel.find({ name: { $regex: new RegExp(name, "i") } })
        res.status(200).json({ 'msg': data })
     
