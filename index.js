@@ -20,6 +20,7 @@ app.get('/get/cat',ShoppingRouter)
 app.get('/get/sort',ShoppingRouter)
 app.delete('/buy',ShoppingRouter)
 app.get('/get/search',ShoppingRouter)
+app.get('/get/page',ShoppingRouter)
 
 
 

@@ -31,6 +31,19 @@ ShoppingRouter.get('/get', async (req, res) => {
         res.status(500).json({ 'msg': "Something went wrong" })
     }
 })
+//get page
+ShoppingRouter.get('/get/page', async (req, res) => {
+    try {
+        const page=req.query.page;
+        if(!page)return res.status(403).json({ 'msg': "Provide page no" })
+        let newdata = await ShoppingModel.find().skip(page*4-(4)).limit(4)
+        res.status(201).json({ 'msg': newdata })
+    }
+    catch (err) {
+        console.error(err)
+        res.status(500).json({ 'msg': "Something went wrong" })
+    }
+})
 //get by category
 ShoppingRouter.get('/get/cat', async (req, res) => {
     try {
