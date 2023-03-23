@@ -35,7 +35,10 @@ ShoppingRouter.get('/get', async (req, res) => {
 ShoppingRouter.get('/get/page', async (req, res) => {
     try {
         const page=req.query.page;
-        if(!page)return res.status(403).json({ 'msg': "Provide page no" })
+        if(!page){
+            let newdata = await ShoppingModel.find()
+        res.status(201).json({ 'msg': newdata })
+        }
         let newdata = await ShoppingModel.find().skip(page*4-(4)).limit(4)
         res.status(201).json({ 'msg': newdata })
     }
